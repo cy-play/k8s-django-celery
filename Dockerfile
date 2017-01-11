@@ -15,4 +15,4 @@ RUN adduser --disabled-password --gecos '' myuser
 
 #Adding files to /app/
 ADD . /app
-RUN chown -R myuser:myuser /app/*
+RUN chown -R myuser:myuser /app
