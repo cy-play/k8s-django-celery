@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: celery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: worker
+      name: worker
+    spec:
+      containers:
+      - image: quay.io/cy-play/celery-test:0.4
+        command:
+        - ./run_celery.sh
+        imagePullPolicy: IfNotPresent
+        name: worker
+        ports:
+        - containerPort: 8000
+          name: worker
+          protocol: TCP
